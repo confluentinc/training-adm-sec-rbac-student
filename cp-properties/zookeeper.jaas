@@ -1,0 +1,10 @@
+// KAFKA_OPTS="-Djava.security.auth.login.config=/home/training/rbac/cp-properties/zookeeper.jaas"
+Server {
+       org.apache.zookeeper.server.auth.DigestLoginModule required
+       user_kafka="kafka-secret";
+};
+
+// WARNING: Confluent secret protection doesn't work with JAAS files.
+// In production, protect your JAAS files with proper permissions and disk level encryption.
+// Place ZooKeeper in a private subnet and allow only traffic from Kafka,
+//  or consider setting up mutual TLS for authentication between Kafka and ZooKeeper (zk version >3.5)

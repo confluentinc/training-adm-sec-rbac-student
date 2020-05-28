@@ -1,0 +1,270 @@
+# ----- Company ----- #
+
+# Define oganizational units for "users" and "groups"
+
+
+dn: ou=users,dc=confluent,dc=io
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: ou=groups,dc=confluent,dc=io
+objectClass: organizationalUnit
+objectClass: top
+ou: groups
+
+
+# ----- Users ----- #
+
+# Define users within the company:
+## Emmy Noether
+## Alice Lookingglass
+## Barnie Rubble
+## Chuck Larrieu Casias
+
+dn: cn=emmy,ou=users,dc=confluent,dc=io
+objectClass: inetOrgPerson
+givenName: Amelie
+surname: Noether
+displayName: Emmy Noether
+description: Interested in action and conservation. If you like it, you should put a Noetherian Ring on it.
+cn: emmy
+uid: emmy
+userPassword: emmy-secret
+
+dn: cn=alice,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Alice
+surname: Lookingglass
+displayName: Alice Lookingglass
+description: Alice is great at changing perspectives, but sometimes chases down rabbit holes
+cn: alice
+uid: alice
+userPassword: alice-secret
+
+dn: cn=barnie,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Barnie
+surname: Rubble
+displayName: Barnie Rubble
+description: Great bowler, better friend
+cn: barnie
+uid: barnie
+userPassword: barnie-secret
+
+dn: cn=chuck,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Charles
+surname: Larrieu Casias
+displayName: Chuck Larrieu Casias
+description: Employee at Confluent
+cn: chuck
+uid: chuck
+userPassword: chuck-secret
+
+
+# ----- Service Accounts ----- #
+
+# Define accounts for applications and services:
+## clickstream-app
+## bad-app
+## clickstream-app-connectors
+
+
+dn: cn=clickstream-app,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: clickstream-app
+surname: clickstream-app
+displayName: Clickstream Analytics Application
+description: An application that analyzes clickstream behavior in real time
+cn: clickstream-app
+uid: clickstream-app
+userPassword: clickstream-app-secret
+
+dn: cn=bad-app,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: bad-app
+surname: bad-app
+displayName: Bad Application
+description: This application lost its way, but it can still be redeemed
+cn: bad-app
+uid: bad-app
+userPassword: bad-app-secret
+
+dn: cn=clickstream-app-connectors,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: clickstream-app-connectors
+surname: clickstream-app-connectors
+displayName: driver-profiles connector
+description: Account for the data generation connectors for the clickstream app
+cn: clickstream-app-connectors
+uid: clickstream-app-connectors
+userPassword: clickstream-app-connectors-secret
+
+
+# ----- Confluent Platform Components ----- #
+
+# Define accounts for Confluent Platform Components like:
+## Kafka, MDS, super-user, Schema Registry, Kafka Connect,
+## ksqlDB, Confluent Control Center, Confluent REST Proxy
+
+dn: cn=kafka,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Kafka
+surname: Kafka
+displayName: Kafka Broker
+description: Stores the Streams
+cn: kafka
+uid: kafka
+userPassword: kafka-secret
+
+dn: cn=mds,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: mds
+surname: mds
+displayName: Confluent Metadata Service
+description: MDS is the software that enforces RBAC in Confluent Platform
+cn: mds
+uid: mds
+userPassword: mds-secret
+
+dn: cn=super-user,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Super
+surname: User
+displayName: Confluent Super User
+description: The super user bootstraps Confluent RBAC
+cn: super-user
+uid: super-user
+userPassword: super-user-secret
+
+dn: cn=schema-registry,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Schema
+surname: Registry
+displayName: Confluent Schema Registry
+description: Account for Schema Registry
+cn: schema-registry
+uid: schema-registry
+userPassword: schema-registry-secret
+
+dn: cn=connect-cluster,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: connect
+surname: cluster
+displayName: Kafka Connect Cluster
+description: Account to authorize Kafka Connect workers in the cluster called "connect-cluster".
+cn: connect-cluster
+uid: connect-cluster
+userPassword: connect-cluster-secret
+
+dn: cn=ksqlDB-cluster,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: ksqlDB-cluster
+surname: ksqlDB-cluster
+displayName: ksqlDB Cluster
+description: Account to authorize ksqlDB servers in the cluster called "ksqlDB-cluster".
+cn: ksqlDB-cluster
+uid: ksqlDB-cluster
+userPassword: ksqlDB-cluster-secret
+
+dn: cn=rest-proxy,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: rest-proxy
+surname: rest-proxy
+displayName: Confluent REST Proxy
+description: Account to authorize REST Proxy servers.
+cn: rest-proxy
+uid: rest-proxy
+userPassword: rest-proxy-secret
+
+dn: cn=control-center,ou=users,dc=confluent,dc=io
+objectClass: top
+objectClass: person
+objectClass: OrganizationalPerson
+objectClass: inetOrgPerson
+givenName: Control
+surname: Center
+displayName: Confluent Control Center
+description: Account to authorize Control Center to read other systems.
+cn: control-center
+uid: control-center
+userPassword: control-center-secret
+
+# ----- Groups -----#
+
+# Define groups within the company:
+## kafka-developers-A
+## kafka-developers-B
+## kafka-admin
+
+dn: cn=kafka-developers-A,ou=groups,dc=confluent,dc=io
+objectClass: top
+objectclass: groupOfNames
+description: A group of software developers and the apps they are responsible for
+cn: kafka-developers-A
+member: cn=alice,ou=users,dc=confluent,dc=io
+member: cn=barnie,ou=users,dc=confluent,dc=io
+member: cn=driver-app,ou=users,dc=confluent,dc=io
+
+dn: cn=kafka-developers-B,ou=groups,dc=confluent,dc=io
+objectClass: top
+objectclass: groupOfNames
+description: A group of software developers and the apps they are responsible for
+cn: kafka-developers-B
+member: cn=chuck,ou=users,dc=confluent,dc=io
+member: cn=emmy,ou=users,dc=confluent,dc=io
+member: cn=bad-app,ou=users,dc=confluent,dc=io
+
+dn: cn=confluent-components,ou=groups,dc=confluent,dc=io
+objectClass: top
+objectclass: groupOfNames
+description: A group for Confluent Platform components
+cn: confluent-components
+member: cn=mds,ou=users,dc=confluent,dc=io
+member: cn=kafka,ou=users,dc=confluent,dc=io
+member: cn=schema-registry,ou=users,dc=confluent,dc=io
+member: cn=super-user,ou=users,dc=confluent,dc=io
+member: cn=connect-cluster,ou=users,dc=confluent,dc=io
+member: cn=ksqlDB-cluster,ou=users,dc=confluent,dc=io
+member: cn=rest-proxy,ou=users,dc=confluent,dc=io
+member: cn=control-center,ou=users,dc=confluent,dc=io

@@ -1,0 +1,14 @@
+// Broker authenticates to ZooKeeper using SASL DIGEST-MD5.
+// Kafka is a client with respect to zookeeper.
+// Use the KAFKA_OPTS variable to add to this jaas file to the Kafka broker JVM:
+// KAFKA_OPTS="-Djava.security.auth.login.config=/home/training/rbac/cp-properties/zookeeper-client.jaas"
+Client {
+       org.apache.zookeeper.server.auth.DigestLoginModule required
+       username="kafka"
+       password="kafka-secret";
+};
+
+// WARNING: Confluent secret protection doesn't work with JAAS files.
+// In production, protect your JAAS files with proper permissions and disk level encryption.
+// Place ZooKeeper in a private subnet and allow only traffic from Kafka,
+//  or consider setting up mutual TLS for authentication between Kafka and ZooKeeper (zk version >3.5)
