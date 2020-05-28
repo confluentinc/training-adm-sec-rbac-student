@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# Exit on error
+set -e
 
-
-
+# Ensure script fails if student source directory doesn't exist
 SOURCE_DIR=/home/training/rbac
+cd $SOURCE_DIR
 
 
 # Encrypt configuration secrets with confluent secrets
