@@ -23,7 +23,7 @@ echo "
 Encrypting properties files with confluent secrets
 "
 
-CONFLUENT_SECURITY_MASTER_KEY=$(confluent secret master-key generate \
+export CONFLUENT_SECURITY_MASTER_KEY=$(confluent secret master-key generate \
     --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties  \
     --passphrase confluent | awk '/Master Key/ {print $5}')
 
@@ -38,7 +38,7 @@ for i in $SOURCE_DIR/client-properties/*.properties $SOURCE_DIR/cp-properties/*.
         --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
 
 # Encrypt ldap.java.naming.security.credentials property
-for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/solutions/server.properties $SOURCE_DIR/cp-properties/server.properties; do
+for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/cp-properties/server.properties; do
     confluent secret file encrypt \
     --config-file $i \
     --config ldap.java.naming.security.credentials \
@@ -69,8 +69,11 @@ ln -sf $SOURCE_DIR/cp-properties/kafka-rest.properties /etc/kafka-rest/kafka-res
 # TODO: kafka <-> zookeeper mutual TLS instead of SASL
 
 echo "
-Modifying systemd unit files to include KAFKA_OPTS and CONFLUENT_SECURITY_MASTER_KEY
+Modifying systemd unit files to include KAFKA_OPTS and CONFLUENT_SECURITY_MASTER_KEY variables
 "
+
+mkdir -p /etc/systemd/system/confluent-zookeeper.service.d \
+    /etc/systemd/system/confluent-server.service.d
 
 cat << EOF > /etc/systemd/system/confluent-zookeeper.service.d/override.conf
 [Service]
@@ -83,6 +86,7 @@ Environment="KAFKA_OPTS=-Djava.security.auth.login.config=$SOURCE_DIR/cp-propert
 Environment="CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY"
 EOF
 
+systemctl daemon-reload
 
 
 # Generate TLS certs, keys, keystores, and truststores
@@ -93,9 +97,11 @@ Generating TLS certs, keys, keystores, and truststores with proper permissions
 "
 
 chmod +x $SOURCE_DIR/security/tls/tls-setup.sh
+pushd $SOURCE_DIR/security/tls
 $SOURCE_DIR/security/tls/tls-setup.sh
 chown cp-kafka:confluent $SOURCE_DIR/security/tls/**/*.keystore*
 chmod 400 $SOURCE_DIR/security/tls/**/*.keystore*
+popd
 
 
 

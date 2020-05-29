@@ -3,7 +3,7 @@
 # Exit on error and don't allow unset (empty) variables
 set -o nounset \
     -o errexit \
-    -o verbose
+#    -o verbose
 #    -o xtrace
 
 #####
@@ -11,11 +11,11 @@ set -o nounset \
 #####
 
 # Declare directories for keys, certs, truststores, and keystores
-declare -A tls-dirs
-tls-dirs[CA]="certificate-authority"
-tls-dirs[DS]="directory-service"
-tls-dirs[KAFKA]="kafka"
-tls-dirs[CLIENT]="kafka-client"
+declare -A tlsdirs
+tlsdirs[CA]="certificate-authority"
+tlsdirs[DS]="directory-service"
+tlsdirs[KAFKA]="kafka"
+tlsdirs[CLIENT]="kafka-client"
 
 declare -A keystores
 # directory service needs keystore for ldaps
@@ -35,9 +35,14 @@ truststores[CLIENT]="kafka-client"
 
 # Function to clean up files
 function cleanup(){
-    for dir in "${tls-dirs[@]}"; do
+    for dir in "${tlsdirs[@]}"; do
         echo "cleaning ${dir} directory"
-        mkdir ${dir}
+        if [ ! -d "${dir}" ]; then
+            echo "
+            Creating directory ${dir}
+            "
+            mkdir ${dir}
+        fi
         rm ${dir}/*
     done
 }
