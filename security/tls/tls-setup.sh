@@ -118,7 +118,7 @@ cleanup
 
 create_ca
 
-for i in "${keystores}"; do
+for i in "${keystores[@]}"; do
     create_private_key $i
     create_csr $i
     sign_crt $i
@@ -126,6 +126,6 @@ for i in "${keystores}"; do
     create_keystore $i
 done
 
-for i in "${truststores}"; do
+for i in "${truststores[@]}"; do
     create_truststore $i
 done
