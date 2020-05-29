@@ -50,8 +50,8 @@ function cleanup(){
 # Function to create a certificate authority key and certificate
 function create_ca(){
     echo "creating CA key and certificate"
-    openssl req -new -x509 -keyout "${tls-drs[CA]}"/ca.key \
-        -out "${tls-drs[CA]}"/ca.crt -days 365 \
+    openssl req -new -x509 -keyout "${tlsdirs[CA]}"/ca.key \
+        -out "${tlsdirs[CA]}"/ca.crt -days 365 \
         -subj '/CN=ca.confluent.io/OU=TEST/O=CONFLUENT/L=PaloAlto/S=Ca/C=US' \
         -passin pass:confluent -passout pass:confluent
 }
@@ -79,7 +79,7 @@ function create_csr(){
 # output: signed certificate for service
 function sign_crt(){
     echo "creating signed certificate for $1"
-    openssl x509 -req -CA "${tls-drs[CA]}"/ca.crt -CAkey "${tls-drs[CA]}"/ca.key \
+    openssl x509 -req -CA "${tlsdirs[CA]}"/ca.crt -CAkey "${tlsdirs[CA]}"/ca.key \
         -in "${1}"/"${1}".csr \
         -out "${1}"/"${1}"-signed.crt \
         -days 9999 -CAcreateserial -passin pass:confluent
@@ -91,7 +91,7 @@ function sign_crt(){
 function create_cert_chain(){
     echo "creating certificate chain for $1"
     cat "${1}"/"${1}"-signed.crt \
-        "${tls-drs[CA]}"/ca.crt > "${1}"/"${1}"-chain.crt
+        "${tlsdirs[CA]}"/ca.crt > "${1}"/"${1}"-chain.crt
 }
 
 
@@ -106,7 +106,7 @@ function create_keystore(){
 
 function create_truststore(){
         keytool -noprompt -keystore "${1}"/"${1}".truststore.jks \
-            -alias CARoot -import -file "${tls-drs[CA]}"/ca.crt \
+            -alias CARoot -import -file "${tlsdirs[CA]}"/ca.crt \
             -storepass confluent -keypass confluent
 }
 
