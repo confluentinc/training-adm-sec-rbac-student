@@ -100,6 +100,7 @@ chmod +x $SOURCE_DIR/security/tls/tls-setup.sh
 pushd $SOURCE_DIR/security/tls
 $SOURCE_DIR/security/tls/tls-setup.sh
 chown cp-kafka:confluent $SOURCE_DIR/security/tls/**/*.keystore*
+chown training:training $SOURCE_DIR/security/tls/directory-service/directory-service.keystore.p12
 chmod 400 $SOURCE_DIR/security/tls/**/*.keystore*
 popd
 
