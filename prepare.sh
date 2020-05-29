@@ -4,9 +4,9 @@
 set -e
 
 # Ensure script fails if student source directory doesn't exist.
-# Requires student to git clone https://github.com/training-adm-sec-rbac-student /home/training/rbac
+# Requires student to git clone https://github.com/confluentinc/training-adm-sec-rbac-student /home/training/rbac
 
-GITHUB_SOURCE=https://github.com/training-adm-sec-rbac-student
+GITHUB_SOURCE=https://github.com/confluentinc/training-adm-sec-rbac-student
 SOURCE_DIR=/home/training/rbac
 if [ ! -d "$SOURCE_DIR" ]; then
   echo "
