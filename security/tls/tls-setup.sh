@@ -43,7 +43,9 @@ function cleanup(){
             "
             mkdir ${dir}
         fi
-        rm ${dir}/*
+        if ["$(ls -A ${dir})" ]; then
+            rm -f ${dir}/*
+        fi
     done
 }
 
