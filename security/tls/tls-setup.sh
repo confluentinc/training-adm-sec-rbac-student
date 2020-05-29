@@ -42,8 +42,8 @@ function cleanup(){
             Creating directory ${dir}
             "
             mkdir ${dir}
-        fi
-        if ["$(ls -A ${dir})" ]; then
+        else
+            echo "removing contents of ${dir}"
             rm -f ${dir}/*
         fi
     done
@@ -107,6 +107,7 @@ function create_keystore(){
 }
 
 function create_truststore(){
+    echo "creating truststore for $1"
         keytool -noprompt -keystore "${1}"/"${1}".truststore.jks \
             -alias CARoot -import -file "${tlsdirs[CA]}"/ca.crt \
             -storepass confluent -keypass confluent
