@@ -27,7 +27,8 @@ export CONFLUENT_SECURITY_MASTER_KEY=$(confluent secret master-key generate \
     --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties  \
     --passphrase confluent | awk '/Master Key/ {print $5}')
 
-# Give training user permission
+# Give training user write permission to secrets.properties to e.g. rotate master key if necessary
+chown training $SOURCE_DIR/security/secrets/secrets.properties
 
 # Make master key accessible to training user so student can use confluent secret CLI
 echo "export CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY" >> /home/training/.bashrc
@@ -128,6 +129,7 @@ openssl genrsa -out $SOURCE_DIR/security/token/tokenKeypair.pem 2048
 openssl rsa -in $SOURCE_DIR/security/token/tokenKeypair.pem \
     -outform PEM -pubout -out $SOURCE_DIR/security/token/public.pem
 
+chown cp-kafka:confluent $SOURCE_DIR/security/token/public.pem
 chown cp-kafka:confluent $SOURCE_DIR/security/token/tokenKeypair.pem 
 chmod 400 $SOURCE_DIR/security/token/tokenKeypair.pem
 
