@@ -27,6 +27,8 @@ export CONFLUENT_SECURITY_MASTER_KEY=$(confluent secret master-key generate \
     --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties  \
     --passphrase confluent | awk '/Master Key/ {print $5}')
 
+# Give training user permission
+
 # Make master key accessible to training user so student can use confluent secret CLI
 echo "export CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY" >> /home/training/.bashrc
 chmod 640 /home/training/.bashrc
@@ -106,10 +108,10 @@ popd
 
 
 
-# Add ca.crt to system certs under /usr/local/share/ca-certificates/confluent
+# Add ca.crt to system certs under /usr/share/ca-certificates/confluent
 # Doing this makes it so the confluent CLI and ldap clients implicitly trust our CA
 
-mkdir /usr/share/ca-certificates/confluent
+mkdir -p /usr/share/ca-certificates/confluent
 cp $SOURCE_DIR/security/tls/certificate-authority/ca.crt /usr/share/ca-certificates/confluent
 update-ca-certificates
 
@@ -128,6 +130,10 @@ openssl rsa -in $SOURCE_DIR/security/token/tokenKeypair.pem \
 
 chown cp-kafka:confluent $SOURCE_DIR/security/token/tokenKeypair.pem 
 chmod 400 $SOURCE_DIR/security/token/tokenKeypair.pem
+
+# Source the bashrc to make confluent secret master key variable available
+
+source /home/training/.bashrc
 
 echo "
 Complete! See instructions to create a secure LDAPS connection and import user and group data.
