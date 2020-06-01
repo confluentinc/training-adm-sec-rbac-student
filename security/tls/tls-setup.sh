@@ -15,6 +15,7 @@ declare -A tlsdirs
 tlsdirs[CA]="certificate-authority"
 tlsdirs[DS]="directory-service"
 tlsdirs[KAFKA]="kafka"
+tlsdirs[MDS]="mds"
 tlsdirs[CLIENT]="kafka-client"
 
 declare -A keystores
@@ -22,6 +23,7 @@ declare -A keystores
 keystores[DS]="directory-service"
 # kafka needs keystore for TLS encrypted communication with clients
 keystores[KAFKA]="kafka"
+keystores[MDS]="mds"
 
 declare -A truststores
 # kafka needs to trust directory service
