@@ -134,9 +134,7 @@ chown cp-kafka:confluent $SOURCE_DIR/security/token/public.pem
 chown cp-kafka:confluent $SOURCE_DIR/security/token/tokenKeypair.pem 
 chmod 400 $SOURCE_DIR/security/token/tokenKeypair.pem
 
-# Source the bashrc to make confluent secret master key variable available
 
-source /home/training/.bashrc
 
 echo "
 Complete! See instructions to create a secure LDAPS connection and import user and group data.
