@@ -34,19 +34,22 @@ chown training $SOURCE_DIR/security/secrets/secrets.properties
 echo "export CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY" >> /home/training/.bashrc
 chmod 640 /home/training/.bashrc
 
+# Encrypt ldap.java.naming.security.credentials and SASL PLAIN passwords
+for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/cp-properties/server.properties; do
+    confluent secret file encrypt \
+    --config-file $i \
+    --config ldap.java.naming.security.credentials \
+    --config listener.name.internal.plain.sasl.jaas.config \
+    --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
+    --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
+
 # Encrypt all properties containing "password"
 for i in $SOURCE_DIR/client-properties/*.properties $SOURCE_DIR/cp-properties/*.properties; do
     confluent secret file encrypt --config-file "$i" \
         --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
         --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
 
-# Encrypt ldap.java.naming.security.credentials property
-for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/cp-properties/server.properties; do
-    confluent secret file encrypt \
-    --config-file $i \
-    --config ldap.java.naming.security.credentials \
-    --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
-    --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
+
 
 
 
