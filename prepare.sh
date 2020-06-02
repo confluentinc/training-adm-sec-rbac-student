@@ -51,8 +51,6 @@ for i in $SOURCE_DIR/client-properties/*.properties $SOURCE_DIR/cp-properties/*.
 
 
 
-
-
 # Link server properties files to files in $SOURCE_DIR/cp-properties.
 # This allows systemd services to run without overriding ExecStart
 

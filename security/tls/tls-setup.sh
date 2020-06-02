@@ -30,6 +30,8 @@ declare -A truststores
 truststores[KAFKA]="kafka"
 # kafka client needs to trust kafka
 truststores[CLIENT]="kafka-client"
+# MDS leader needs to trust MDS followers
+truststores[MDS]="mds"
 
 #####
 ##### Define Functions #####
