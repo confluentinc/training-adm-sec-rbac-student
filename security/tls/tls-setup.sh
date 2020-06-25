@@ -17,6 +17,11 @@ tlsdirs[DS]="directory-service"
 tlsdirs[KAFKA]="kafka"
 tlsdirs[MDS]="mds"
 tlsdirs[CLIENT]="kafka-client"
+tlsdirs[SR]="schema-registry"
+tlsdirs[CC]="control-center"
+tlsdirs[KSQL]="ksqldb-server"
+tlsdirs[CONNECT]="kafka-connect"
+tlsdirs[RP]="rest-proxy"
 
 declare -A keystores
 # directory service needs keystore for ldaps
@@ -24,12 +29,23 @@ keystores[DS]="directory-service"
 # kafka needs keystore for TLS encrypted communication with clients
 keystores[KAFKA]="kafka"
 keystores[MDS]="mds"
+# These components need keystores to secure their REST APIs with HTTPS
+keystores[SR]="schema-registry"
+keystores[CC]="control-center"
+keystores[KSQL]="ksqldb-server"
+keystores[CONNECT]="kafka-connect"
+keystores[RP]="rest-proxy"
 
 declare -A truststores
 # kafka needs to trust directory service
 truststores[KAFKA]="kafka"
-# kafka client needs to trust kafka
+# kafka client and CP components need to trust kafka
 truststores[CLIENT]="kafka-client"
+truststores[SR]="schema-registry"
+truststores[CC]="control-center"
+truststores[KSQL]="ksqldb-server"
+truststores[CONNECT]="kafka-connect"
+truststores[RP]="rest-proxy"
 # MDS leader needs to trust MDS followers
 truststores[MDS]="mds"
 
