@@ -43,6 +43,19 @@ for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/cp-properties/serv
     --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
     --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
 
+# Encrypt confluent.metadata.basic.auth.user.info for RESTful CP components
+for i in $SOURCE_DIR/challenges/schema-registry.properties \
+    $SOURCE_DIR/cp-properties/schema-registry.properties \
+    $SOURCE_DIR/cp-properties/connect-avro-distributed.properties \
+    $SOURCE_DIR/cp-properties/control-center.properties \
+    $SOURCE_DIR/cp-properties/ksql-server.properties \
+    $SOURCE_DIR/cp-properties/kafka-rest.properties; do
+        confluent secret file encrypt \
+        --config-file $i \
+        --config confluent.metadata.basic.auth.user.info \
+        --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
+        --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
+
 # Encrypt all properties containing "password"
 for i in $SOURCE_DIR/client-properties/*.properties $SOURCE_DIR/cp-properties/*.properties; do
     confluent secret file encrypt --config-file "$i" \
