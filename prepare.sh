@@ -103,6 +103,15 @@ Environment="KAFKA_OPTS=-Djava.security.auth.login.config=$SOURCE_DIR/cp-propert
 Environment="CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY"
 EOF
 
+for i in schema-registry kafka-connect ksqldb kafka-rest control-center; do
+cat << EOF > /etc/systemd/system/confluent-$i.service.d/override.conf
+[Service]
+Environment="CONFLUENT_SECURITY_MASTER_KEY=$CONFLUENT_SECURITY_MASTER_KEY"
+EOF
+done
+
+
+
 systemctl daemon-reload
 
 
