@@ -44,8 +44,7 @@ for i in $SOURCE_DIR/challenges/server.properties $SOURCE_DIR/cp-properties/serv
     --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
 
 # Encrypt confluent.metadata.basic.auth.user.info for RESTful CP components
-for i in $SOURCE_DIR/challenges/schema-registry.properties \
-    $SOURCE_DIR/cp-properties/schema-registry.properties \
+for i in $SOURCE_DIR/cp-properties/schema-registry.properties \
     $SOURCE_DIR/cp-properties/connect-avro-distributed.properties \
     $SOURCE_DIR/cp-properties/control-center.properties \
     $SOURCE_DIR/cp-properties/ksql-server.properties \
@@ -89,8 +88,9 @@ echo "
 Modifying systemd unit files to include KAFKA_OPTS and CONFLUENT_SECURITY_MASTER_KEY variables
 "
 
-mkdir -p /etc/systemd/system/confluent-zookeeper.service.d \
-    /etc/systemd/system/confluent-server.service.d
+for i in zookeeper server schema-registry kafka-connect ksqldb kafka-rest control-center; do
+    mkdir -p /etc/systemd/system/confluent-$i.service.d
+done
 
 cat << EOF > /etc/systemd/system/confluent-zookeeper.service.d/override.conf
 [Service]
