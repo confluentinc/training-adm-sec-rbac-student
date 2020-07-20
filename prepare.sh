@@ -127,7 +127,7 @@ pushd $SOURCE_DIR/security/tls
 $SOURCE_DIR/security/tls/tls-setup.sh
 chown cp-kafka:confluent $SOURCE_DIR/security/tls/**/*.keystore*
 chown training:training $SOURCE_DIR/security/tls/directory-service/directory-service.keystore.p12
-chmod 400 $SOURCE_DIR/security/tls/**/*.keystore*
+chmod 440 $SOURCE_DIR/security/tls/**/*.keystore*
 popd
 
 
@@ -135,8 +135,10 @@ popd
 # Add ca.crt to system certs under /usr/share/ca-certificates/confluent
 # Doing this makes it so the confluent CLI and ldap clients implicitly trust our CA
 
-mkdir -p /usr/share/ca-certificates/confluent
-cp $SOURCE_DIR/security/tls/certificate-authority/ca.crt /usr/share/ca-certificates/confluent
+mkdir -p /usr/local/share/ca-certificates/confluent
+cp $SOURCE_DIR/security/tls/certificate-authority/ca.crt /usr/share/ca-certificates/confluent/
+chmod 755 /usr/local/share/ca-certificates/confluent
+chmod 644 /usr/local/share/ca-certificates/confluent/ca.crt
 update-ca-certificates
 
 
