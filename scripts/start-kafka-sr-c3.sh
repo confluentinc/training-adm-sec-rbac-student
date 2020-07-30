@@ -5,11 +5,21 @@
 # then manually start the directory service in the ApacheDS UI
 
 echo -e "\n#################### Starting ZK and CP Server ##################\n"
-systemctl start confluent-zookeeper confluent-server
+systemctl start confluent-zookeeper
+
+while [[ -z $(nc -z -v zookeeper 2181 2>&1 | grep 'open') ]]; do
+    sleep 5
+    echo "waiting for ZooKeeper to start"
+done
+
+systemctl start confluent-server
 
 while [[ -z $(nc -z -v mds 8090 2>&1 | grep 'open') ]]; do
     sleep 5
     echo "waiting for MDS to start"
+    if [[ -n "$(systemctl status confluent-server.service | grep 'failed')" ]]; then
+        systemctl restart confluent-server
+    fi
 done
 
 export KAFKA_CLUSTER_ID=$(curl -k -s https://mds:8090/v1/metadata/id | jq -r .id)
@@ -24,6 +34,8 @@ expect "Password: "
 send "kafka-secret\r"
 expect "Logged in as"
 EOF
+
+sleep 10
 
 ################################### SCHEMA REGISTRY ###################################
 echo -e "\nCreating role bindings and starting Schema Registry\n"
