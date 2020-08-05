@@ -27,7 +27,7 @@ CREATE TABLE pages_per_min AS SELECT userid, WINDOWSTART as EVENT_TS, count(*) A
 -- Use 'HAVING' Filter to show ERROR codes > 400 where count > 5
 CREATE TABLE ERRORS_PER_MIN_ALERT AS SELECT status, WINDOWSTART as EVENT_TS, count(*) AS errors FROM clickstream window HOPPING ( size 30 second, advance by 20 second) WHERE status > 400 GROUP BY status HAVING count(*) > 5 AND count(*) is not NULL;
 
-CREATE table ERRORS_PER_MIN AS SELECT status, WINDOWSTART as EVENT_TS, count(*) AS errors FROM clickstream window HOPPING ( size 60 second, advance by 5  second) WHERE status > 400 GROUP BY status;
+CREATE TABLE ERRORS_PER_MIN AS SELECT status, WINDOWSTART as EVENT_TS, count(*) AS errors FROM clickstream window HOPPING ( size 60 second, advance by 5  second) WHERE status > 400 GROUP BY status;
 
 --Join using a STREAM
 CREATE STREAM ENRICHED_ERROR_CODES AS SELECT code, definition FROM clickstream LEFT JOIN clickstream_codes ON clickstream.status = clickstream_codes.code;
