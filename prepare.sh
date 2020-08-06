@@ -61,6 +61,13 @@ for i in $SOURCE_DIR/client-properties/*.properties $SOURCE_DIR/cp-properties/*.
         --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
         --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties; done
 
+# Encrypt Kafka Connect Secret Registry encryption key
+confluent secret file encrypt \
+    --config-file $SOURCE_DIR/cp-properties/connect-avro-distributed.properties \
+    --config config.providers.secret.param.master.encryption.key \
+    --local-secrets-file $SOURCE_DIR/security/secrets/secrets.properties \
+    --remote-secrets-file $SOURCE_DIR/security/secrets/secrets.properties
+
 
 
 # Link server properties files to files in $SOURCE_DIR/cp-properties.
