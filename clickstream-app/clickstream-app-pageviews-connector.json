@@ -1,0 +1,10 @@
+{
+    "name": "clickstream-app-pageviews",
+    "config": {
+        "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+        "kafka.topic": "pageviews",
+        "quickstart": "pageviews",
+        "principal.service.name": "clickstream-app-connectors",
+        "principal.service.password": "${secret:clickstream-app-pageviews:password}"
+    }
+}
